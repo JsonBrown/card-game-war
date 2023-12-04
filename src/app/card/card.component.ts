@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Card } from '../card';
 
 @Component({
   selector: 'app-card',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./card.component.less']
 })
 export class CardComponent {
-
+  @Input('card') currentCard: Card | undefined;
 }
