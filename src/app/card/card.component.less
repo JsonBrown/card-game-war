@@ -6,14 +6,20 @@
     border-radius: 5px;
     position: relative;
     margin: 10px;
+    font-size: xx-large;
 
-    .suit {
-        position: absolute;
-        right:3px;
-        top:3px;
-    }
     .number {
+        position: absolute;
+        right:5px;
+        top:5px;
+    }
+    .suit {
         margin-top: 70px;
-        font-size: xx-large;
+    }
+    .card {
+        &.heart, &.diamond {
+            color: maroon;
+            border-color: maroon;
+        }
     }
 }

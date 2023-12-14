@@ -12,16 +12,16 @@ export class WarService {
 
   shuffle(): Card[] {
     let suits: {[k: string]: string} = {
-      "0":"Hearts",
-      "1":"Spades",
-      "2":"Diamonds",
-      "3":"Clubs"
+      "0":"heart",
+      "1":"spade",
+      "2":"diamond",
+      "3":"club"
     };
     let faces: {[k: number]: string} = {
-      11:"Jack",
-      12:"Queen",
-      13:"King",
-      14:"Ace",
+      11:"J",
+      12:"Q",
+      13:"K",
+      14:"A",
     };
     let coreDeck = Object.keys(suits)
       .reduce(function(all, suit){
@@ -37,15 +37,15 @@ export class WarService {
       },new Array<Card>);
     coreDeck.push({
       number: 15,
-      CardName: "Joker",
+      CardName: "JKR",
       suit: 0,
-      SuitName: "Red",
+      SuitName: "heart",
     });
     coreDeck.push({
       number: 15,
-      CardName: "Joker",
+      CardName: "JKR",
       suit: 1,
-      SuitName: "Black",
+      SuitName: "spade",
     });
 
     return coreDeck.sort(() => Math.random() - 0.5);
