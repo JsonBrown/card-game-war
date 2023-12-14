@@ -6,28 +6,26 @@ import { Card } from './card';
 })
 export class WarService {
   deck: Card[] = [];
-  hands: {[k: string]: Card[]} = {};
-
   constructor() { 
     this.deck = this.shuffle();
   }
 
   shuffle(): Card[] {
-    var suits: {[k: string]: string} = {
+    let suits: {[k: string]: string} = {
       "0":"Hearts",
       "1":"Spades",
       "2":"Diamonds",
       "3":"Clubs"
     };
-    var faces: {[k: number]: string} = {
-      1:"Ace",
+    let faces: {[k: number]: string} = {
       11:"Jack",
       12:"Queen",
-      13:"King"
+      13:"King",
+      14:"Ace",
     };
     let coreDeck = Object.keys(suits)
       .reduce(function(all, suit){
-        for (let i: number = 1; i < 14; i++) {
+        for (let i: number = 2; i < 15; i++) {
           all.push({
             number: i,
             CardName: faces[i] || i.toString(),
@@ -38,16 +36,16 @@ export class WarService {
         return all;               
       },new Array<Card>);
     coreDeck.push({
-      number: 14,
+      number: 15,
       CardName: "Joker",
       suit: 0,
-      SuitName: "Joker",
+      SuitName: "Red",
     });
     coreDeck.push({
-      number: 14,
+      number: 15,
       CardName: "Joker",
       suit: 1,
-      SuitName: "Joker",
+      SuitName: "Black",
     });
 
     return coreDeck.sort(() => Math.random() - 0.5);
@@ -55,7 +53,7 @@ export class WarService {
 
   deal(player: number, of: number) : Card[]
   {
-    let hand = Array<Card>(); 
+    let hand = new Array<Card>(); 
     let handSize = (54 / of);
     let startPosition = (player * handSize) - handSize;
     for (let i: number = startPosition; i < (startPosition + handSize); i++) {
@@ -63,4 +61,19 @@ export class WarService {
     }
     return hand;
   }
+
+  compare(cards: Card[]) : number {
+    var ordered = cards.map(function(card, i){
+      return {
+        index: i,
+        card: card
+      };
+    }).sort((a,b) => a.card.number - b.card.number);
+
+    let winner = ordered[0];
+    return !ordered.every(c => c.card.number == winner.card.number) ? winner.index
+    : -1; // WAR
+  }
+
+  
 }

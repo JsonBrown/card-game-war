@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WarService } from '../war.service';
 import { Card } from '../card';
 
@@ -12,16 +12,24 @@ export class PlayerComponent implements OnInit {
   discards: Card[] = [];
   currentCard: Card | undefined = undefined;
   @Input("player") player: number = 1;
+  @Output() iDrew = new EventEmitter<Card>();
 
   constructor(private warService: WarService) {}
   ngOnInit(): void {
     this.deck = this.warService.deal(this.player, 2);
-    this.currentCard = this.draw();
+    //this.currentCard = this.draw();
   }
   private draw() : Card | undefined{
     return this.deck.pop();
   }
   private discard(card: Card) : void {
-    this.discards.push(card);
+    if(!!card) {
+      this.discards.push(card);
+    }
+  }
+
+  drawACard():void {
+    this.currentCard = this.draw();
+    this.iDrew.emit(this.currentCard);
   }
 }
