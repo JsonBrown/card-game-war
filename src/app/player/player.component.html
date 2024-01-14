@@ -1,4 +1,4 @@
-<div class="player">
-    <app-card [card]="currentCard"></app-card>
+<div class="player" [class]="{'winner': winner == player}">
+    <app-card class="current-card" [card]="currentCard"></app-card>
     <app-deck (click)="drawACard()"></app-deck>
 </div>

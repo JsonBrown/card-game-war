@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PlayerService } from '../player.service';
 import { Card } from '../card';
+import { WarService } from '../war.service';
 
 @Component({
   selector: 'app-player',
@@ -11,9 +12,13 @@ import { Card } from '../card';
 export class PlayerComponent implements OnInit {
   currentCard: Card | undefined = undefined;
   @Input("player") player: number = 1;
-  @Output() iDrew = new EventEmitter<Card>();
+  winner: number = 0;
 
-  constructor(private playerService: PlayerService) {}
+  constructor(private playerService: PlayerService, private warService: WarService) {
+    this.warService
+      .results
+      .subscribe(winner => this.winner = winner);
+  }
   ngOnInit(): void {
     this.playerService.deal(this.player, 2);
     //this.currentCard = this.draw();
@@ -30,6 +35,5 @@ export class PlayerComponent implements OnInit {
 
   drawACard():void {
     this.currentCard = this.draw();
-    this.iDrew.emit(this.currentCard);
   }
 }
